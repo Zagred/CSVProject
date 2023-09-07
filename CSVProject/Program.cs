@@ -16,15 +16,12 @@ public class Program
         {
             using (var reader = new StreamReader(File.OpenRead(filePath)))
             {
-
                 List<List<string>> student = CSVparsing.FileParsing(reader);
                 CSVparsing.ListPrint(student);
-
             }
         }
         catch (Exception)
         {
-
             Console.WriteLine("Something went wrong.");
         }
 

@@ -17,7 +17,6 @@ namespace TestProject
             myList.Add(new List<string> { "ime, familia, \"adres na choveka\"" });
             int max = myList.Max(x => x.Count);
             string output = string.Join(Environment.NewLine, myList[max].ToArray());
-            //
             CSVparsing.Parsing(output, myList);
         }
     }

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CSVProject": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\Users\\paco\\Desktop\\Project\\document.csv"
+    }
+  }
+}

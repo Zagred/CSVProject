@@ -16,8 +16,10 @@ public class Program
         {
             using (var reader = new StreamReader(File.OpenRead(filePath)))
             {
-                List<List<string>> student = CSVparsing.FileParsing(reader);
-                CSVparsing.ListPrint(student);
+                var csv = new CSVparsing();
+
+                List<List<string>> student = csv.ParseFile(reader);
+                csv.ListPrint(student);
             }
         }
         catch (Exception)

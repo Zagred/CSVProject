@@ -12,18 +12,18 @@ namespace CSVLibrary
 {
     public class CSVparsing
     {
-        public static List<List<string>> FileParsing(StreamReader Reader)
+        public List<List<string>> ParseFile(StreamReader Reader)
         {
             List<List<string>> fileList = new List<List<string>>();
             while (!Reader.EndOfStream)
             {
                 var line = Reader.ReadLine();
-                Parsing(line, fileList);
+                fileList.Add(ParseLine(line));
 
             }
             return fileList;
         }
-        public static void Parsing(string line, List<List<string>> fileList)
+        public List<string> ParseLine(string line)
         {
             string words = null;
             List<string> newList = new List<string>();
@@ -55,22 +55,19 @@ namespace CSVLibrary
                             words = null;
                             i = j;
                             break;
-
                         }
-
                     }
-                    fileList.Add(newList);
                 }
             }
-
+            return newList;
         }
-        public static void ListPrint(List<List<string>> fileList)
+        public void ListPrint(List<List<string>> fileList)
         {
-            for (int i = 0; i < fileList.Count; i++)
+            foreach (List<string> line in fileList)
             {
-                for (int j = 0; j < fileList[i].Count; j++)
+                foreach (string token in line)
                 {
-                    Console.Write($"{fileList[i][j]} ");
+                    Console.Write($"{token} ");
                 }
                 Console.WriteLine();
             }

@@ -15,7 +15,7 @@ namespace CSVLibrary.Tests
         public void ParsingTest()
         {
             var csv = new CSVparsing();
-            var result = csv.ParseLine("ime, \"fami,lia\", \"adres na choveka\"");
+            var result = csv.ParseLine("ime,\"fami,lia\",\"adres na choveka\"");
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Count == 3);
             Assert.IsTrue(result[0] == "ime");

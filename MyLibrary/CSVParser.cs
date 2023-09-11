@@ -25,39 +25,48 @@ namespace CSVLibrary
         }
         public List<string> ParseLine(string line)
         {
+            bool inQuotes = false;
             string words = null;
             List<string> newList = new List<string>();
 
             for (int i = 0; i < line.Length; i++)
             {
-                words += line[i];
-
-                if (line[i] == ',')
+                switch(line[i])
                 {
-                    words = words.Trim(',');
-                    words = words.Trim(' ');
-                    newList.Add(words);
-                    words = null;
-                }
-                else if (line[i] == '"')
-                {
-                    for (int j = i + 1; j < line.Length; j++)
-                    {
-                        if (line[j] != '"')
+                    case ',':
+                        if (inQuotes == true)
                         {
-                            words += line[j];
+                            words += line[i];
                         }
                         else
                         {
-                            words += line[j];
-                            newList.Add(words);
-
-                            words = null;
-                            i = j;
-                            break;
+                            if (words != null)
+                            {
+                                newList.Add(words);
+                                words = null;
+                            }
                         }
-                    }
+                        break;
+                    case '"':
+                        if (inQuotes == true)
+                        {
+                            words += line[i];
+                            newList.Add(words);
+                            words = null;
+                            inQuotes = false;
+                        }
+                        else
+                        {
+                            inQuotes = true;
+                            words += line[i];
+                        }
+                        break;
+                    default:
+                        words += line[i];
+                        break;
+
                 }
+
             }
             return newList;
         }
@@ -67,7 +76,7 @@ namespace CSVLibrary
             {
                 foreach (string token in line)
                 {
-                    Console.Write($"{token} ");
+                    Console.Write($"{token}|");
                 }
                 Console.WriteLine();
             }

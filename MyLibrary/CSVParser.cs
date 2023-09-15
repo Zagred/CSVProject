@@ -21,8 +21,6 @@ namespace CSVLibrary
                 var line = Reader.ReadLine();
                 bool inQuotes = false;
                 string words = null;
-               
-
                 for (int i = 0; i < line.Length; i++)
                 {
                     switch (line[i])
@@ -36,7 +34,12 @@ namespace CSVLibrary
                             {
                                 if (words != null)
                                 {
+                                    
                                     newList.Add(words);
+                                    if (newList.Count == 3)
+                                    {
+                                        fileList.Add(newList);
+                                    }
                                     words = null;
                                 }
                             }
@@ -46,6 +49,10 @@ namespace CSVLibrary
                             {
                                 words += line[i];
                                 newList.Add(words);
+                                if (newList.Count == 3)
+                                {
+                                    fileList.Add(newList);
+                                }
                                 words = null;
                                 inQuotes = false;
                             }
@@ -60,26 +67,22 @@ namespace CSVLibrary
                             break;
 
                     }
-
+                    
                 }
-                if (newList.Count == 3)
-                {
-                    fileList.Add(newList);
-                }
-                //fileList.Add(ParseLine(line));
-
+               
             }
+                //fileList.Add(ParseLine(line));
             return fileList;
         }
        /* public List<string> ParseLine(string line)
         {
-
             bool inQuotes = false;
             string words = null;
             List<string> newList = new List<string>();
+
             for (int i = 0; i < line.Length; i++)
             {
-                switch(line[i])
+                switch (line[i])
                 {
                     case ',':
                         if (inQuotes == true)
@@ -122,9 +125,8 @@ namespace CSVLibrary
         {
             foreach (List<string> line in fileList)
             {
-                foreach (string token in line)
-                {
-                    Console.Write($"{token}|");
+                for (int i = 0;i < line.Count;i+=3) {
+                    Console.WriteLine($"{line[i]} {line[i + 1]} {line[i+2]}");
                 }
                 Console.WriteLine();
             }

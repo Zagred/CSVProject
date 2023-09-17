@@ -21,6 +21,7 @@ namespace CSVLibrary
                 var line = Reader.ReadLine();
                 bool inQuotes = false;
                 string words = null;
+
                 for (int i = 0; i < line.Length; i++)
                 {
                     switch (line[i])
@@ -34,11 +35,11 @@ namespace CSVLibrary
                             {
                                 if (words != null)
                                 {
-                                    
                                     newList.Add(words);
                                     if (newList.Count == 3)
                                     {
                                         fileList.Add(newList);
+                                        newList = new List<string>();
                                     }
                                     words = null;
                                 }
@@ -49,9 +50,10 @@ namespace CSVLibrary
                             {
                                 words += line[i];
                                 newList.Add(words);
-                                if (newList.Count == 3)
+                                if(newList.Count == 3)
                                 {
                                     fileList.Add(newList);
+                                    newList = new List<string>();
                                 }
                                 words = null;
                                 inQuotes = false;
@@ -67,11 +69,10 @@ namespace CSVLibrary
                             break;
 
                     }
-                    
+
                 }
-               
             }
-                //fileList.Add(ParseLine(line));
+            
             return fileList;
         }
        /* public List<string> ParseLine(string line)
@@ -125,8 +126,9 @@ namespace CSVLibrary
         {
             foreach (List<string> line in fileList)
             {
-                for (int i = 0;i < line.Count;i+=3) {
-                    Console.WriteLine($"{line[i]} {line[i + 1]} {line[i+2]}");
+                foreach (string token in line)
+                {
+                    Console.Write($"{token}|");
                 }
                 Console.WriteLine();
             }

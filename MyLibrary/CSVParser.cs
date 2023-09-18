@@ -75,53 +75,6 @@ namespace CSVLibrary
             
             return fileList;
         }
-       /* public List<string> ParseLine(string line)
-        {
-            bool inQuotes = false;
-            string words = null;
-            List<string> newList = new List<string>();
-
-            for (int i = 0; i < line.Length; i++)
-            {
-                switch (line[i])
-                {
-                    case ',':
-                        if (inQuotes == true)
-                        {
-                            words += line[i];
-                        }
-                        else
-                        {
-                            if (words != null)
-                            {
-                                newList.Add(words);
-                                words = null;
-                            }
-                        }
-                        break;
-                    case '"':
-                        if (inQuotes == true)
-                        {
-                            words += line[i];
-                            newList.Add(words);
-                            words = null;
-                            inQuotes = false;
-                        }
-                        else
-                        {
-                            inQuotes = true;
-                            words += line[i];
-                        }
-                        break;
-                    default:
-                        words += line[i];
-                        break;
-
-                }
-
-            }
-            return newList;
-        }*/
         public void ListPrint(List<List<string>> fileList)
         {
             foreach (List<string> line in fileList)

@@ -14,13 +14,12 @@ public class Program
         string filePath = args[0];
         try
         {
-            using (var reader = new StreamReader(File.OpenRead(filePath)))
-            {
-                var csv = new CSVparsing();
 
-                List<List<string>> student = csv.ParseFile(reader);
+                var csv = new CSVparsing();
+                string text=File.ReadAllText(filePath);
+                List<List<string>> student = csv.ParseFile(text);
                 csv.ListPrint(student);
-            }
+            
         }
         catch (Exception)
         {

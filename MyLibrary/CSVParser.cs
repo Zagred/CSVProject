@@ -1,78 +1,75 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Runtime.Remoting.Messaging;
+using System.Collections.Generic;
+using System;
 
 namespace CSVLibrary
 {
     public class CSVparsing
     {
-        public List<List<string>> ParseFile(StreamReader Reader)
+        public List<List<string>> ParseFile(string text)
         {
             List<List<string>> fileList = new List<List<string>>();
             List<string> newList = new List<string>();
-            while (!Reader.EndOfStream)
+            bool inQuotes = false;
+            string token = null;
+
+
+            for (int i = 0; i < text.Length; i++)
             {
-                var line = Reader.ReadLine();
-                bool inQuotes = false;
-                string words = null;
-
-                for (int i = 0; i < line.Length; i++)
+                switch (text[i])
                 {
-                    switch (line[i])
-                    {
-                        case ',':
-                            if (inQuotes == true)
+                    case ',':
+                        if (inQuotes == true)
+                        {
+                            token += text[i];
+                        }
+                        else
+                        {
+                            if (token != null)
                             {
-                                words += line[i];
+                                newList.Add(token);
+                                token = null;
                             }
-                            else
-                            {
-                                if (words != null)
-                                {
-                                    newList.Add(words);
-                                    if (newList.Count == 3)
-                                    {
-                                        fileList.Add(newList);
-                                        newList = new List<string>();
-                                    }
-                                    words = null;
-                                }
-                            }
-                            break;
-                        case '"':
-                            if (inQuotes == true)
-                            {
-                                words += line[i];
-                                newList.Add(words);
-                                if(newList.Count == 3)
-                                {
-                                    fileList.Add(newList);
-                                    newList = new List<string>();
-                                }
-                                words = null;
-                                inQuotes = false;
-                            }
-                            else
-                            {
-                                inQuotes = true;
-                                words += line[i];
-                            }
-                            break;
-                        default:
-                            words += line[i];
-                            break;
+                        }
+                        break;
+                    case '"':
+                        if (inQuotes == true)
+                        {
+                            token += text[i];
+                            newList.Add(token);
+                            token = null;
+                            inQuotes = false;
+                        }
+                        else
+                        {
+                            inQuotes = true;
+                            token += text[i];
+                        }
+                        break;
+                    case '\r':
+                        if (text[i + 1] == '\n' && inQuotes == true)
+                        {
+                            i++;
+                        }
+                        else if (text[i + 1] == '\n' && inQuotes == false)
+                        {
+                            i++;
+                            fileList.Add(newList);
+                            newList = new List<string>();
+                        }
 
-                    }
+                        break;
+                    default:
+                        token += text[i];
+                        break;
 
                 }
+
             }
-            
             return fileList;
         }
         public void ListPrint(List<List<string>> fileList)

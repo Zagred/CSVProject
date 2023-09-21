@@ -14,14 +14,14 @@ namespace CSVLibrary.Tests
         [TestMethod()]
         public void ParsingTest()
         {
-            /*var csv = new CSVparsing();
-            var result = csv.ParseLine("ime,\"fami,lia\",\"adres na choveka\"");
+            var csv = new CSVparsing();
+            string text = File.ReadAllText("ime,\"fami,lia\",\"adres na \r\nchoveka\"");
+            var result = csv.ParseFile(text);
             Assert.IsNotNull(result);
-            Assert.IsTrue(result.Count == 3);
-            Assert.IsTrue(result[0] == "ime");
-            Assert.IsTrue(result[1] == "\"fami,lia\"");
-            Assert.IsTrue(result[2] == "\"adres na choveka\"");
-            */
+            Assert.IsTrue(result[0][0] == "ime");
+            Assert.IsTrue(result[0][1] == "\"fami,lia\"");
+            Assert.IsTrue(result[0][2] == "\"adres na choveka\"");
+
         }
     }
 }
